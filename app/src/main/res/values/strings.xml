@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Exercise2106</string>
     <string name="daily_consumption">Daily consumption</string>
+    <string name="update_product">Update Product</string>
 </resources>

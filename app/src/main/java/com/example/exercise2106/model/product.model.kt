@@ -42,6 +42,19 @@ data class Product(
         override fun newArray(size: Int): Array<Product?> {
             return arrayOfNulls(size)
         }
+        const val TABLE_NAME = "notes"
+        const val COLUMN_ID = "id"
+        const val COLUMN_NAME = "note"
+        const val COLUMN_KILOGRAM = "kilogram"
+        const val COLUMN_PRICE = "price"
+        const val COLUMN_ADDRESS = "address"
+        const val CREATE_TABLE = ("CREATE TABLE " + TABLE_NAME + "("
+                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + COLUMN_NAME + " TEXT,"
+                + COLUMN_KILOGRAM + " REAL,"
+                + COLUMN_PRICE + " REAL,"
+                + COLUMN_ADDRESS + " TEXT"
+                + ")")
     }
 
 }

@@ -10,29 +10,18 @@ class DatabaseHelper(context: Context?) :
 
 
     override fun onCreate(db: SQLiteDatabase?) {
-        db?.execSQL(CREATE_TABLE)
+        db?.execSQL(Product.CREATE_TABLE)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        db?.execSQL("DROP TABLE IF EXISTS " + CREATE_TABLE)
+        db?.execSQL("DROP TABLE IF EXISTS " + Product.CREATE_TABLE)
         onCreate(db)
     }
-    companion object{
-        const val TABLE_NAME = "notes"
-        const val COLUMN_ID = "id"
-        const val COLUMN_NAME= "note"
-        const val COLUMN_KILOGRAM = "kilogram"
-        const val COLUMN_PRICE = "price"
-        const val COLUMN_ADDRESS = "address"
-        val CREATE_TABLE = ("CREATE TABLE " + TABLE_NAME + "("
-                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + COLUMN_NAME + " TEXT,"
-                + COLUMN_KILOGRAM + " REAL,"
-                + COLUMN_PRICE + " REAL,"
-                + COLUMN_ADDRESS + " TEXT"
-                + ")")
+
+    companion object {
+        const val DATABASE_VERSION = 1
+        const val DATABASE_NAME = "products_db"
     }
 }
 
-const val DATABASE_VERSION = 1
-const val DATABASE_NAME = "products_db"
+

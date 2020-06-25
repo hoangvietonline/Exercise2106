@@ -6,55 +6,67 @@ import android.database.sqlite.SQLiteDatabase
 import com.example.exercise2106.model.Product
 import java.util.*
 
-class DatabaseManager( context: Context) {
-    private var databaseHelper = DatabaseHelper(context)
-    private lateinit var  database : SQLiteDatabase
+class DatabaseManager private constructor(context: Context) {
+    private var databaseHelper: DatabaseHelper = DatabaseHelper(context)
+
+    companion object {
+        private var INSTANCE: DatabaseManager? = null
+        fun getInstance(context: Context): DatabaseManager {
+            if (INSTANCE == null)
+                INSTANCE = DatabaseManager(context)
+            return INSTANCE!!
+        }
+    }
 
     fun insertProduct(product: Product): Long {
         val database = databaseHelper.writableDatabase
         val contentValue = ContentValues()
-        contentValue.put(DatabaseHelper.COLUMN_NAME, product.name)
-        contentValue.put(DatabaseHelper.COLUMN_KILOGRAM, product.kilogram)
-        contentValue.put(DatabaseHelper.COLUMN_PRICE, product.price)
-        contentValue.put(DatabaseHelper.COLUMN_ADDRESS, product.address)
-        return database.insert(DatabaseHelper.TABLE_NAME, null, contentValue)
+        contentValue.put(Product.COLUMN_NAME, product.name)
+        contentValue.put(Product.COLUMN_KILOGRAM, product.kilogram)
+        contentValue.put(Product.COLUMN_PRICE, product.price)
+        contentValue.put(Product.COLUMN_ADDRESS, product.address)
+        val id = database.insert(Product.TABLE_NAME, null, contentValue)
+        database.close()
+        return id
     }
 
     fun update(product: Product): Int {
-        database = databaseHelper.writableDatabase
+        val database = databaseHelper.writableDatabase
         val contentValues = ContentValues()
-        contentValues.put(DatabaseHelper.COLUMN_NAME, product.name)
-        contentValues.put(DatabaseHelper.COLUMN_KILOGRAM, product.kilogram)
-        contentValues.put(DatabaseHelper.COLUMN_PRICE, product.price)
-        contentValues.put(DatabaseHelper.COLUMN_ADDRESS, product.address)
-        return database.update(
-            DatabaseHelper.TABLE_NAME,
+        contentValues.put(Product.COLUMN_NAME, product.name)
+        contentValues.put(Product.COLUMN_KILOGRAM, product.kilogram)
+        contentValues.put(Product.COLUMN_PRICE, product.price)
+        contentValues.put(Product.COLUMN_ADDRESS, product.address)
+        val id = database.update(
+            Product.TABLE_NAME,
             contentValues,
-            DatabaseHelper.COLUMN_ID + " = " + product.id,
+            Product.COLUMN_ID + " = " + product.id,
             null
         )
+        database.close()
+        return id
     }
 
     fun getAllProduct(): List<Product>? {
-        database = databaseHelper.writableDatabase
+        val database = databaseHelper.writableDatabase
         val products = ArrayList<Product>()
 
         // Select All Query
         val selectQuery =
-            "SELECT  * FROM " + DatabaseHelper.TABLE_NAME
+            "SELECT  * FROM " + Product.TABLE_NAME
         val cursor = database?.rawQuery(selectQuery, null)
 
         // looping through all rows and adding to list
         if (cursor!!.moveToFirst()) {
             do {
                 val product = Product()
-                product.id = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_ID))
-                product.name = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NAME))
-                product.price = cursor.getLong(cursor.getColumnIndex(DatabaseHelper.COLUMN_PRICE))
+                product.id = cursor.getInt(cursor.getColumnIndex(Product.COLUMN_ID))
+                product.name = cursor.getString(cursor.getColumnIndex(Product.COLUMN_NAME))
+                product.price = cursor.getLong(cursor.getColumnIndex(Product.COLUMN_PRICE))
                 product.kilogram =
-                    cursor.getFloat(cursor.getColumnIndex(DatabaseHelper.COLUMN_KILOGRAM))
+                    cursor.getFloat(cursor.getColumnIndex(Product.COLUMN_KILOGRAM))
                 product.address =
-                    cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_ADDRESS))
+                    cursor.getString(cursor.getColumnIndex(Product.COLUMN_ADDRESS))
                 products.add(product)
             } while (cursor.moveToNext())
         }
@@ -62,14 +74,20 @@ class DatabaseManager( context: Context) {
         // return notes list
         return products
     }
+
     fun getProductByID(id: Long): Product? {
         // get readable database as we are not inserting anything
         val db: SQLiteDatabase = databaseHelper.readableDatabase
         val cursor = db.query(
-            DatabaseHelper.TABLE_NAME,
-            arrayOf(DatabaseHelper.COLUMN_ID, DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_KILOGRAM,
-                DatabaseHelper.COLUMN_PRICE,DatabaseHelper.COLUMN_ADDRESS),
-            DatabaseHelper.COLUMN_ID + "=?",
+            Product.TABLE_NAME,
+            arrayOf(
+                Product.COLUMN_ID,
+                Product.COLUMN_NAME,
+                Product.COLUMN_KILOGRAM,
+                Product.COLUMN_PRICE,
+                Product.COLUMN_ADDRESS
+            ),
+            Product.COLUMN_ID + "=?",
             arrayOf(id.toString()),
             null,
             null,
@@ -77,23 +95,22 @@ class DatabaseManager( context: Context) {
             null
         )
         cursor?.moveToFirst()
-
         // prepare note object
         val product = Product(
-            cursor!!.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_ID)),
-            cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NAME)),
-            cursor.getFloat(cursor.getColumnIndex(DatabaseHelper.COLUMN_KILOGRAM)),
-            cursor.getLong(cursor.getColumnIndex(DatabaseHelper.COLUMN_PRICE)),
-            cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_ADDRESS))
+            cursor!!.getInt(cursor.getColumnIndex(Product.COLUMN_ID)),
+            cursor.getString(cursor.getColumnIndex(Product.COLUMN_NAME)),
+            cursor.getFloat(cursor.getColumnIndex(Product.COLUMN_KILOGRAM)),
+            cursor.getLong(cursor.getColumnIndex(Product.COLUMN_PRICE)),
+            cursor.getString(cursor.getColumnIndex(Product.COLUMN_ADDRESS))
         )
-
         // close the db connection
         cursor.close()
         return product
     }
 
-    fun delete(_id: Long) {
-        database = databaseHelper?.writableDatabase
-        database!!.delete(DatabaseHelper.TABLE_NAME, DatabaseHelper.COLUMN_ID + "=" + _id, null)
+    fun delete(id: Long) {
+        val database = databaseHelper.writableDatabase
+        database.delete(Product.TABLE_NAME, Product.COLUMN_ID + "=" + id, null)
+        database.close()
     }
 }

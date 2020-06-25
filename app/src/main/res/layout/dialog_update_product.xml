@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_image_view">
+
+    <TextView
+        android:id="@+id/tvTitleDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/update_product"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvProductUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="Product"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitleDialog" />
+
+    <EditText
+        android:id="@+id/edtNameUpdate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:inputType="text"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/tvProductUpdate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvProductUpdate"
+        app:layout_constraintTop_toTopOf="@+id/tvProductUpdate" />
+
+    <TextView
+        android:id="@+id/tvKilogramUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="Kilogram"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/tvProductUpdate"
+        app:layout_constraintTop_toBottomOf="@+id/tvProductUpdate" />
+
+    <TextView
+        android:id="@+id/tvPriceUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="Price"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/tvKilogramUpdate"
+        app:layout_constraintTop_toBottomOf="@+id/tvKilogramUpdate" />
+
+    <TextView
+        android:id="@+id/tvAddressUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="Address"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/tvPriceUpdate"
+        app:layout_constraintTop_toBottomOf="@+id/tvPriceUpdate" />
+
+    <EditText
+        android:id="@+id/edtKiloUpdate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="@+id/edtNameUpdate"
+        app:layout_constraintStart_toStartOf="@+id/edtNameUpdate"
+        app:layout_constraintTop_toTopOf="@+id/tvKilogramUpdate" />
+
+    <EditText
+        android:id="@+id/edtPriceUpdate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="@+id/edtKiloUpdate"
+        app:layout_constraintStart_toStartOf="@+id/edtKiloUpdate"
+        app:layout_constraintTop_toTopOf="@+id/tvPriceUpdate" />
+
+    <EditText
+        android:id="@+id/edtAddressUpdate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/tvAddressUpdate"
+        app:layout_constraintEnd_toEndOf="@+id/edtPriceUpdate"
+        app:layout_constraintStart_toStartOf="@+id/edtPriceUpdate"
+        app:layout_constraintTop_toTopOf="@+id/tvAddressUpdate" />
+
+    <Button
+        android:id="@+id/btnSubmitUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_btn_submit"
+        android:text="Submit"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/edtAddressUpdate" />
+</androidx.constraintlayout.widget.ConstraintLayout>
